@@ -1,1 +1,2 @@
-# собственная сборка webpack для react приложений(typescript & jest included) v4
+# mobx converter app
+## stack: materialUI, MobX, React, TypeScript
