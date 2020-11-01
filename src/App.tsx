@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       padding: theme.spacing(10),
+      display: 'flex',
     },
     paper: {
       padding: theme.spacing(2),
@@ -67,7 +68,7 @@ function App() {
 
   React.useEffect(() => {
     axios
-      .get('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD,JPY,EUR')
+      .get('https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD')
       .then(({ data }) => {
         const coins: TCoin[] = data.Data.map((coin: any) => {
           const obj: TCoin = {
@@ -85,17 +86,17 @@ function App() {
   }, []);
   return (
     <Container className={classes.root} maxWidth="lg">
-      <Paper elevation={3}>
+
         <Grid item xs={8}>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Dessert (100g serving)</TableCell>
-                  <TableCell align="left">Calories</TableCell>
-                  <TableCell align="left">Calories</TableCell>
-                  <TableCell align="left">Calories</TableCell>
-                  <TableCell align="left">Calories</TableCell>
+                  <TableCell>Crypto</TableCell>
+                  <TableCell align="left">Name</TableCell>
+                  <TableCell align="left">FullName</TableCell>
+                  <TableCell align="left">Price</TableCell>
+                  <TableCell align="left">Volume24Hour</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -145,7 +146,6 @@ function App() {
             </Typography>
           </Paper>
         </Grid>
-      </Paper>
     </Container>
   );
 }
