@@ -1,4 +1,4 @@
-class ConverterStore {
+class ConverterStore { 
 }
 
 export default ConverterStore

@@ -1,9 +1,9 @@
-import ConverterStore from './ConverterStore'
 import CurrenciesStore from './CurrenciesStore'
+import ConverterStore from './ConverterStore'
 
-const stores = {
-    converterStore: new ConverterStore(),
+const store = { 
     currenciesStore: new CurrenciesStore(),
+    converterStore: new ConverterStore()
 }
 
-export default stores
+export default store

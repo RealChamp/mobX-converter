@@ -1,39 +1,43 @@
-import { observable, computed, action } from 'mobx';
+import {makeObservable, observable, computed, action} from 'mobx'
+import {TCoin} from '../types'
 import axios from 'axios'
-import { TCoin } from '../types';
 
-class CurrenciesStore {
-  @observable private items: TCoin[] = [];
+class CurrenciesStore { 
+    items: TCoin[] = []
 
-  @computed
-  get getItems() {
-    return this.items;
-  }
+    constructor() {
+        makeObservable(this, {
+            items: observable,
+            getItems: computed,
+            setItems: action,
+            fetchCoins: action
+        })
+    }
 
-  @action
-  setItems = (items: TCoin[]): void => {
-    this.items = items;
-  };
+    get getItems() {
+        return this.items
+    }
 
-  @action
-  fetchCoins = () => {
-    axios
-    .get('https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD')
-    .then(({ data }) => {
-      const coins: TCoin[] = data.Data.map((coin: any) => {
-        const obj: TCoin = {
-          name: coin.CoinInfo.Name,
-          fullName: coin.CoinInfo.FullName,
-          imageUrl: `https://www.cryptocompare.com/${coin.CoinInfo.ImageUrl}`,
-          price: coin.RAW.USD.PRICE.toFixed(2),
-          volume24Hour: parseInt(coin.RAW.USD.VOLUME24HOUR),
-        };
+    setItems(items: TCoin[]) {
+        return this.items = items
+    }
 
-        return obj;
-      });
-      this.items = coins;
-    });
-  }
+    fetchCoins() {
+        axios.get('https://min-api.cryptocompare.com/data/top/totalvolfull?limit=10&tsym=USD')
+        .then(({data}) => {
+            const coins: TCoin[] = data.Data.map((coin: any) => {
+                const obj: TCoin = {
+                    name: coin.CoinInfo.Name,
+                    fullName: coin.CoinInfo.FullName,
+                    imageUrl: `https://www.cryptocompare.com/${coin.CoinInfo.ImageUrl}`,
+                    price: coin.RAW.USD.PRICE.toFixed(3),
+                    volume24Hour: parseInt(coin.RAW.USD.VOLUME24HOUR)
+                }
+                return obj
+            })
+            this.setItems(coins)
+        })
+    }
 }
 
-export default CurrenciesStore;
+export default CurrenciesStore

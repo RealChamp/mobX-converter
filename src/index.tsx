@@ -1,14 +1,15 @@
-import React, { StrictMode } from 'react';
+import React, { StrictMode, createContext } from 'react';
+import stores from './stores'
 import ReactDOM from 'react-dom';
 import App from './App';
-import { Provider } from 'mobx-react';
-import stores from './stores'
+
+export const CurrenciesStore = createContext<typeof stores | null>(null)
 
 ReactDOM.render(
   <StrictMode>
-    <Provider {...stores}>
+    <CurrenciesStore.Provider value={stores}>
       <App />
-    </Provider>
+    </CurrenciesStore.Provider>
   </StrictMode>,
   document.getElementById('root'),
 );
