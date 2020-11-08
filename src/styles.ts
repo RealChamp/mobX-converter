@@ -32,6 +32,12 @@ const useStyles = makeStyles((theme: Theme) =>
       width: 18,
       height: 18,
       borderRadius: '50%',
+    },
+    redColumn: {
+      backgroundColor: '#ffdada'
+    },
+    greenColumn: {
+      backgroundColor: '#d8ffc4'
     }
   }),
 );
