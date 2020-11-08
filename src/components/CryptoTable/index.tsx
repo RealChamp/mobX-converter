@@ -18,9 +18,12 @@ type TCryptoTable = {
 
 const CryptoTable = observer(({ classes }: TCryptoTable) => {
   const currencies = useContext(CurrenciesStore)
-  const items: any = currencies?.currenciesStore.getItems
+  const items: TCoin[] = currencies?.currenciesStore.getItems!
   React.useEffect(()=> {
     currencies?.currenciesStore.fetchCoins()
+    setInterval(()=> {
+      currencies?.currenciesStore.fetchCoins()
+    }, 30000)
   },[])
   return (
     <TableContainer component={Paper}>
@@ -48,7 +51,7 @@ const CryptoTable = observer(({ classes }: TCryptoTable) => {
                 </TableCell>
                 <TableCell align="left">{coin.name}</TableCell>
                 <TableCell align="left">{coin.fullName}</TableCell>
-                <TableCell align="left">$ {coin.price}</TableCell>
+                <TableCell className={currencies?.currenciesStore.diffItems[coin.name] && classes[`${currencies?.currenciesStore.diffItems[coin.name]}Column`]} align="left">$ {coin.price}</TableCell>
                 <TableCell align="left">$ {coin.volume24Hour}</TableCell>
               </TableRow>
             ))}
